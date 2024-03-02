@@ -1,5 +1,10 @@
 import Vue from "vue";
 
+/**
+ * Nested
+ * Get/Set/Remove nested object path
+ * @type {{set(Object, (Array|string|number), *): void, get(Object, (Array|string)): *, delete(Object, (Array|string)): *}}
+ */
 const nested = {
 
     /**

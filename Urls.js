@@ -1,43 +1,55 @@
+import {Utils} from "./Utils";
+
 /**
  * Urls Class
  * this class handle all urls and apis address
  */
+export function Urls() {
+  //
+}
 
-const urls = {
-    apiParamsSupperKey: "@api_params:",
+/**
+ * Api and urls data
+ * @type {{}}
+ */
+Urls.data = {
+  // dev_api_base_url: '...',
+  // api_base_url: '...',
+  // ...
+}
 
-    urls: {
-        base_url: "https://appx.webkok.ir",
-        download_pro_version: "https://appx.webkok.ir/download-pro-version",
-        qr_url: "https://api.qrserver.com/v1/create-qr-code/?size=%sx%s&data=%s",
+/**
+ * Init urls data
+ * @param data
+ */
+Urls.init = function (data) {
+  this.data = data;
+}
 
-    },
+/**
+ * Urls request with base url
+ * @param key
+ * @param parameters
+ * @returns {*}
+ */
+Urls.api = function (key = null, parameters = []) {
+  const dev_base_url = this.data['dev_api_base_url'];
+  const base = Utils.isDev() && dev_base_url ? dev_base_url : this.data['api_base_url'];
+  if (!key) return base;
+  return base + this.get(key, parameters);
+}
 
-    // Get api
-    api(key, parameters = []) {
-        return this.urls["base_url"] + this.url(key, parameters);
-    },
-
-    // Get url without base url
-    url(key, parameters = []) {
-        if (!Array.isArray(parameters)) parameters = [];
-        let url = this.urls[key];
-        if (parameters.length !== 0) url = this.set_url_parameters(url, parameters);
-        return url;
-    },
-
-    // Set url parameters
-    set_url_parameters(url, params) {
-        try {
-            params.forEach((param) => {
-                url = url.replace('%s', param);
-            })
-            return url;
-        } catch (e) {
-            console.log();
-            return url;
-        }
-    },
-};
-
-export default urls;
+/**
+ * Get url without base url
+ */
+Urls.get = function (key, parameters = []) {
+  try {
+    if (!Array.isArray(parameters)) parameters = [];
+    let url = this.data[key];
+    if (parameters.length !== 0) url = Utils.setStringParameters(url, parameters);
+    return url ?? '';
+  } catch (e) {
+    Utils.devLog(e)
+    return '';
+  }
+}

@@ -3,78 +3,97 @@ import storage from "./Storage";
 /**
  *  Auth Class
  *  this class handle user info and user
+ *  @constructor
  */
+export function Auth() {
 
-const auth = {
-  supper_key: "@auth_user:",
+}
 
-  // Set user info
-  setUserInfo(value) {
-    storage.set(this.supper_key + "user_info", value);
-  },
+/**
+ * Storage keys
+ * @type {*}
+ */
+Auth.storage_keys = {
+  USER: "@auth_user:user_info",
+  TOKEN: "@auth_user:token",
+  REFRESH_TOKEN: "@auth_user:refresh_token",
+  EXPIRATION: "@auth_user:expiration_date",
+}
 
-  // Get user info
-  getUserInfo() {
-    return storage.get(this.supper_key + "user_info");
-  },
+/**
+ * Save current user info to local storage
+ */
+Auth.setUser = function (value) {
+  storage.set(this.storage_keys.USER, value)
+}
 
-  // This method save user token
-  // on database
-  saveToken(token) {
-    storage.set(this.supper_key + "token", token);
-  },
+/**
+ * Get current user info from local storage
+ * @returns {*}
+ */
+Auth.getUser = function () {
+  return storage.get(this.storage_keys.USER)
+}
 
-  // This method save user refresh token
-  // on database
-  saveRefreshToken(refresh_token) {
-    storage.set(this.supper_key + "refresh_token", refresh_token);
-  },
+/**
+ * Save token
+ */
+Auth.setToken = function (token) {
+  storage.set(this.storage_keys.TOKEN, token);
+}
 
-  saveExpiration(data) {
-    storage.set(this.supper_key + "expiration", data);
-  },
-  saveCafeLicenseExpiration(data) {
-    storage.set(this.supper_key + "cafe_license_expiration", data);
-  },
+/**
+ * This method get user token on local storage
+ * @returns {*}
+ */
+Auth.getToken = function () {
+  return storage.get(this.storage_keys.TOKEN);
+}
 
-  // This method get user token
-  // on database
-  getToken() {
-    return storage.get(this.supper_key + "token");
-  },
+/**
+ *  This method save user refresh token on local storage
+ * @param refresh_token
+ */
+Auth.setRefreshToken = function (refresh_token) {
+  storage.set(this.storage_keys.REFRESH_TOKEN, refresh_token);
+}
 
-  getRefreshToken() {
-    return storage.get(this.supper_key + "refresh_token");
-  },
+/**
+ * Get refresh token
+ */
+Auth.getRefreshToken = function () {
+  return storage.get(this.storage_keys.REFRESH_TOKEN);
+}
 
-  getExpiration() {
-    return storage.get(this.supper_key + "expiration");
-  },
-  getCafeLicenseExpiration() {
-    return storage.get(this.supper_key + "cafe_license_expiration");
-  },
+/**
+ * Save expiration date
+ */
+Auth.setExpiration = function (data) {
+  storage.set(this.storage_keys.EXPIRATION, data);
+}
 
-  // This method get user token
-  // on database
-  check() {
-    let token = this.getToken();
-    return token != null && token !== "" && token !== undefined;
-  },
+/**
+ * Get expiration date
+ */
+Auth.getExpiration = function () {
+  return storage.get(this.storage_keys.EXPIRATION);
+}
 
-  // This method remove token and all user data
-  // of database
-  removeToken() {
-    storage.remove(this.supper_key + "user_info");
-    storage.remove(this.supper_key + "token");
-    storage.remove(this.supper_key + "refresh_token");
-    storage.remove(this.supper_key + "expiration");
-  },
+/**
+ * This method get user token on local storage
+ */
+Auth.check = function () {
+  let token = this.getToken();
+  return token != null && token !== "" && token !== undefined;
+}
 
-  // This method remove token and all user data
-  // of database
-  clear() {
-    this.removeToken();
-  },
-};
-
-export default auth;
+/**
+ * This method remove token and all user data from local storage
+ */
+Auth.logout = function () {
+  try {
+    Object.keys(this.storage_keys)?.forEach((key) => storage.remove(key))
+  } catch (e) {
+    console.log(e);
+  }
+}

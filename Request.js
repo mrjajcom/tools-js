@@ -3,10 +3,10 @@ import handler from "./Handler";
 import auth from "./Auth";
 import Trans from "./Trans";
 
-const api = axios.create({});
+const request = axios.create({});
 
-api.defaults.withCredentials = true;
-api.interceptors.request.use(
+request.defaults.withCredentials = true;
+request.interceptors.request.use(
     (request) => {
 
         if (Trans.getLang()) request.headers.common["Accept-Language"] = Trans.getLang();
@@ -22,7 +22,7 @@ api.interceptors.request.use(
 );
 
 // response and error handler
-api.interceptors.response.use(
+request.interceptors.response.use(
     async (response) => {
         return handler.response(response);
     },
@@ -31,4 +31,4 @@ api.interceptors.response.use(
     }
 );
 
-export default api;
+export default request;
