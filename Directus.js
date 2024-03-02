@@ -2,7 +2,7 @@ import {authentication, createDirectus, readItems, refresh, rest, staticToken} f
 import {reactive} from "vue";
 import {Auth} from "./Auth";
 import {Utils} from "./Utils";
-import {Urls} from "@/tools-js/Urls";
+import {Urls} from "@/tools/Urls";
 
 
 /**
@@ -23,6 +23,7 @@ Directus.factory = function () {
 
 /**
  * Create object
+ * @return Directus
  */
 Directus.reactive = function (...params) {
   return reactive(Directus.factory(...params));
@@ -51,6 +52,7 @@ Directus.prototype.client = null;
  * @returns {DirectusClient<any> & RestClient<Schema>}
  */
 Directus.prototype.setClient = function () {
+  console.error(Urls.api())
   this.client = createDirectus(Urls.api());
   return this.client;
 }
@@ -116,9 +118,16 @@ Directus.prototype.getItems = async function (collection, params = {}) {
 /**
  * Reset request data
  */
-Directus.prototype.reset = function (){
+Directus.prototype.reset = function () {
   this.loading = false;
   this.response = null;
+}
+
+/**
+ * Check has data in response
+ */
+Directus.prototype.hasData = function () {
+  return !!this.response
 }
 
 // Privates *****

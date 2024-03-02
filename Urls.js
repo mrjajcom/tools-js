@@ -20,9 +20,10 @@ Urls.data = {
 
 /**
  * Init urls data
+ * @param app
  * @param data
  */
-Urls.init = function (data) {
+Urls.init = function (app, data) {
   this.data = data;
 }
 

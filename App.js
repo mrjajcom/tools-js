@@ -1,4 +1,5 @@
-import {Urls} from "@/tools-js/Urls";
+import {Urls} from "@/tools/Urls";
+import Trans from "@/tools/Trans";
 
 /**
  * App
@@ -32,12 +33,16 @@ App.default_configs = {
 
 /**
  * Init tools
+ * @param app {createApp}
  * @param configs {{app?: *, urls?: *}}
  */
-App.init = function (configs) {
+App.init = function (app, configs) {
   const options = {...this.default_configs, ...configs};
   this.data = options?.app;
-  Urls.init(options?.urls)
+
+  // Add new tools init here
+  Urls.init(app, options?.urls)
+  Trans.init(app, options?.trans)
 }
 
 /**
@@ -53,9 +58,9 @@ App.set = function (key, data) {
 /**
  * Set configs
  * @param key Nested string with '.', Array or simple key
- * @param data
+ * @return *
  */
-App.get = function (key, data) {
-  this.data[key] = data;
+App.get = function (key) {
+  return this.data[key];
 }
 

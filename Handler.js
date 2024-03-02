@@ -15,7 +15,7 @@ const handler = {
         try {
             // token expired error
             if (result.response.status === 403) {
-                if (auth.check()) {
+                if (auth.isLogin()) {
                     if (3 < this.counter) {
                         this.counter = 0;
                         auth.removeToken();

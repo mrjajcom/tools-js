@@ -82,7 +82,7 @@ Auth.getExpiration = function () {
 /**
  * This method get user token on local storage
  */
-Auth.check = function () {
+Auth.isLogin = function () {
   let token = this.getToken();
   return token != null && token !== "" && token !== undefined;
 }
