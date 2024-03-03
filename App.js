@@ -1,5 +1,5 @@
-import {Urls} from "@/tools/Urls";
-import Trans from "@/tools/Trans";
+import {Urls} from "./Urls";
+import Trans from "./Trans";
 
 /**
  * App

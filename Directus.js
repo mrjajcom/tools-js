@@ -2,7 +2,7 @@ import {authentication, createDirectus, readItems, refresh, rest, staticToken} f
 import {reactive} from "vue";
 import {Auth} from "./Auth";
 import {Utils} from "./Utils";
-import {Urls} from "@/tools/Urls";
+import {Urls} from "./Urls";
 
 
 /**
